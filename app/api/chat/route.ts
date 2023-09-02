@@ -15,7 +15,8 @@ const openai = new OpenAIApi(configuration)
 
 export async function POST(req: Request) {
   const json = await req.json()
-  const { messages, previewToken } = json
+  const { previewToken } = json
+  let { messages } = json
   const userId = (await auth())?.user.id
 
   if (!userId) {
@@ -28,13 +29,17 @@ export async function POST(req: Request) {
     configuration.apiKey = previewToken
   }
 
-  const messagesWithContext = messages.map((message, index) => {
-    return 'Who framed Roger Rabbit?'
+  // TODO:: Hit LangChain API to get context and set it here
+  const context = 'Answer as a valley girl named Kayleigh who says like a lot'
+
+  messages = messages.map(message => {
+    message.content = `${context}: ${message.content}`
+    return message
   })
 
   const res = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
-    messagesWithContext,
+    messages,
     temperature: 0.7,
     stream: true
   })
