@@ -28,9 +28,13 @@ export async function POST(req: Request) {
     configuration.apiKey = previewToken
   }
 
+  const messagesWithContext = messages.map((message, index) => {
+    return 'Who framed Roger Rabbit?'
+  })
+
   const res = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
-    messages,
+    messagesWithContext,
     temperature: 0.7,
     stream: true
   })

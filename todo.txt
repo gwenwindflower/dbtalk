@@ -1,0 +1,7 @@
+- Add local oauth app on github and configure
+- Add fixed context to messages
+- Sub in langchain instead of openai direct call
+- Write basic JSON parsing logic for a static manifest.json
+- Set up a vector store
+- Get RAG working on basic use case (model names or something like that)
+- Expand JSON parsing logic to get more data out of the manifest
